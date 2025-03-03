@@ -1,0 +1,14 @@
+
+# Download Oh My Posh themes
+RUN mkdir -p ~/.poshthemes && \
+    curl -s https://ohmyposh.dev/themes | tar -xz -C ~/.poshthemes
+
+# Configure Oh My Posh in PowerShell profile
+RUN mkdir -p ~/.config/powershell/ && \
+    echo 'oh-my-posh init pwsh --config ~/.poshthemes/paradox.omp.json | Invoke-Expression' >> ~/.config/powershell/Microsoft.PowerShell_profile.ps1
+
+# Set PATH for Homebrew and Oh My Posh
+ENV PATH="/home/${USER}/.linuxbrew/bin:/home/${USER}/.linuxbrew/sbin:${PATH}"
+
+# Ensure Homebrew environment is loaded
+RUN echo 'eval $(/home/${USER}/.linuxbrew/bin/brew shellenv)' >> /home/${USER}/.bashrc
